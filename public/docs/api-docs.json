@@ -1,0 +1,1201 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "online-support-system API Version 1 Documentation"
+  },
+    "host": "127.0.0.1:8000",
+  "basePath": "/api/v1/",
+  "tags": [
+    {
+      "name": "Signup",
+      "description": "signup"
+    },
+    {
+      "name": "Login",
+      "description": "login"
+    },
+    {
+      "name": "Logout",
+      "description": "logout"
+    },
+    {
+      "name": "Search",
+      "description": "For Admin Only"
+    },
+    {
+      "name": "Create Question",
+      "description": "For Customer Only"
+    },
+    {
+      "name": "Create Reply",
+      "description": "Reply"
+    },
+    {
+      "name": "Close Question",
+      "description": "Admin only"
+    },
+    {
+      "name": "SPAM Report",
+      "description": "Admin only"
+    },
+    {
+      "name": "View Question",
+      "description": "To check particular Question"
+    },
+    {
+      "name": "View Reply",
+      "description": "To check particular reply"
+    },
+    {
+      "name": "All Replies",
+      "description": "To get all replies of particular Question"
+    }
+
+  ],
+  "schemes": [
+    "http"
+  ],
+
+  "paths": {
+
+    "/signup": {
+        "post": {
+            "tags": [
+                "Signup"
+            ],
+            "summary": "Signup Here",
+            "description": "",
+            "operationId": "showALL",
+            "consumes": [
+                "multipart/form-data"
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "parameters": [
+                {
+                    "name": "full_name",
+                    "in": "formData",
+                    "required": true,
+                    "type": "string",
+                    "example" : "John"
+                },
+                {
+                    "name": "username",
+                    "in": "formData",
+                    "required": true,
+                    "type": "string",
+                    "example" : "Luca"
+                },
+                {
+                    "name": "password",
+                    "in": "formData",
+                    "required": true,
+                    "type": "string",
+                    "example" : "$sffg$"
+                },
+                {
+                    "name": "password_confirmation",
+                    "in": "formData",
+                    "required": true,
+                    "type": "string",
+                    "example" : "$sffg$"
+                },
+                {
+                    "name": "user_type",
+                    "in": "formData",
+                    "required": true,
+                    "type": "string",
+                    "enum":[
+                      "admin",
+                      "customer"
+                    ],
+                    "example" : "Yes"
+                },
+                {
+                    "name": "email",
+                    "in": "formData",
+                    "required": true,
+                    "type": "string",
+                    "example" : "f.shah.c@g.com"
+                }
+            ],
+            "responses": {
+              "200": {
+                  "description": "successful operation",
+                  "schema": {
+
+                      "properties": {
+                          "status": {
+                              "type": "string",
+                              "example":"Success"
+                          },
+                          "data": {
+                              "type": "string",
+                              "example":{
+                              "full_name": "Fathimath Shahina",
+                              "username": "admin",
+                              "user_type": "admin",
+                              "email": "noreplyatshah@gamil.com"
+                              }
+                          }
+
+                      }
+                  }
+              },
+
+              "404": {
+                  "description": "Error",
+                  "schema": {
+
+                      "properties": {
+
+                          "status": {
+                              "type": "string",
+                              "example":"Error"
+                          },
+                          "message": {
+                              "type": "string",
+                              "example": "Failed to Create."
+                          }
+                      }
+                  }
+              },
+              "422": {
+                  "description": "Validation-Error",
+                  "schema": {
+                      "properties": {
+                          "status": {
+                              "type": "string",
+                              "example":"Validation-Error"
+                          },
+                          "message": {
+                              "type":"string",
+                              "example":{
+                                "email": [
+                                    "The email must be a valid email address."
+                                  ],
+                                  "password": [
+                                    "The password confirmation does not match."
+                                  ]
+                              }
+                          }
+                      }
+                  }
+              }
+            }
+        }
+    },
+      "/login": {
+          "post": {
+              "tags": [
+                  "Login"
+              ],
+              "summary": "Login Here",
+              "description": "",
+              "operationId": "showALL",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                  {
+                      "name": "username",
+                      "in": "formData",
+                      "required": true,
+                      "type": "string",
+                      "example" : "John",
+                      "description": "user name"
+
+                  },
+                  {
+                      "name": "password",
+                      "in": "formData",
+                      "required": true,
+                      "type": "string",
+                      "example" : "Luca",
+                      "description": "****"
+
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "successful operation",
+                      "schema": {
+
+                          "properties": {
+
+                              "status": {
+                                  "type": "string",
+                                  "example":"Success"
+                              },
+                              "data": {
+                                  "type": "string",
+                                  "example":{
+                                    "full_name": "Fathimath Shahina",
+                                    "username": "admin",
+                                    "user_type": "admin",
+                                    "email": "noreplyatshah@gamil.com"
+                                  }
+                              },
+                              "access_token": {
+                                  "type": "string",
+                                  "example":"8|l4EVqE8tcBfkXgZLcUyPPJXSyBBW8Ex7VwknJjeH"
+                              }
+
+                          }
+
+
+                      }
+                  },
+
+                  "404": {
+                      "description": "Error",
+                      "schema": {
+
+                          "properties": {
+
+                              "status": {
+                                  "type": "string",
+                                  "example":"Error"
+                              },
+                              "message": {
+                                  "type": "string",
+                                  "example": "The provided credentials are incorrect."
+                              }
+                          }
+                      }
+                  },
+                  "422": {
+                      "description": "Validation-Error",
+                      "schema": {
+                          "properties": {
+                              "status": {
+                                  "type": "string",
+                                  "example":"Validation-Error"
+                              },
+                              "message": {
+                                  "type":"string",
+                                  "example":{
+                                    "username":["The username field is required."]
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/logout": {
+          "get": {
+              "tags": [
+                  "Logout"
+              ],
+              "summary": "Logout Here",
+              "description": "",
+              "operationId": "showALL",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+
+                  {
+                      "name": "Authorization",
+                      "in": "header",
+                      "description": "Access token",
+                      "type": "apiKey",
+                      "example": "Bearer 4|55agweK9rvfmJR3j8zzKKxhWvEvlSeGH4bcL0fxV"
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "successful operation",
+                      "schema": {
+
+                          "properties": {
+
+                                "status": {
+                                    "type": "string",
+                                    "example":"Success"
+                                },
+                              "message": {
+                                  "type": "string",
+                                  "example": "Logged Out Successfully!!"
+                              }
+
+                          }
+
+
+                      }
+                  },
+
+                  "401": {
+                      "description": "Error",
+                      "schema": {
+
+                          "properties": {
+
+                              "status": {
+                                  "type": "string",
+                                  "example": "Error"
+                              },
+                              "message": {
+                                  "type": "string",
+                                  "example": "Unauthenticated."
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/search": {
+          "post": {
+              "tags": [
+                  "Search"
+              ],
+              "summary": "Search Here",
+              "description": "",
+              "operationId": "showALL",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+
+                  {
+                      "name": "Authorization",
+                      "in": "header",
+                      "description": "Access token",
+                      "type": "apiKey",
+                      "example": "Bearer 4|55agweK9rvfmJR3j8zzKKxhWvEvlSeGH4bcL0fxV"
+                  },
+                  {
+                      "name": "customer_name",
+                      "in": "formData",
+                      "required": false,
+                      "type": "string",
+                      "example" : "John",
+                      "description": "search"
+                  },
+                  {
+                      "name": "status",
+                      "in": "formData",
+                      "required": false,
+                      "type": "string",
+                      "enum":["Not Answered", "In Progress", "Answered", "SPAM"],
+                      "description": "search"
+
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "successful operation",
+                      "schema": {
+                          "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "example":"Success"
+                                },
+                              "data": {
+                                  "type": "string",
+                                  "example":[{
+                                    "id": 1,
+                                    "enquiry_code": "Zp4YJPBNTX",
+                                    "question": "ABCD  ?",
+                                    "is_read": 1,
+                                    "status": "Not Answered",
+                                    "closed_by": 1,
+                                    "closed_at": "2022-02-26 05:15:00",
+                                    "created_by": 2,
+                                    "replies": [
+                                      {
+                                        "id": 1,
+                                        "reply": "The answer trr ",
+                                        "is_read": 0,
+                                        "user_type": "admin",
+                                        "notification_email": 0,
+                                        "enquiry_id": 1,
+                                        "created_by": 1
+                                      }],
+                                    "created_user": [
+                                        {
+                                            "id": 2,
+                                            "username": "customer",
+                                            "email": "f.shahina.ca@gmail.com",
+                                            "full_name": "customer 123"
+                                        }
+                                    ],
+                                    "closed_user": []
+                                  }]
+                              }
+
+                          }
+
+
+                      }
+                  },
+
+                  "401": {
+                      "description": "Error",
+                      "schema": {
+
+                          "properties": {
+
+                              "status": {
+                                  "type": "string",
+                                  "example": "Error"
+                              },
+                              "message": {
+                                  "type": "string",
+                                  "example": "Unauthenticated."
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/create-question": {
+          "post": {
+              "tags": [
+                  "Create Question"
+              ],
+              "summary": "Create Here",
+              "description": "",
+              "operationId": "showALL",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Access token",
+                        "type": "apiKey",
+                        "example": "Bearer 4|55agweK9rvfmJR3j8zzKKxhWvEvlSeGH4bcL0fxV"
+                    },
+                    {
+                        "name": "question",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string",
+                        "example" : "Abc?"
+                    }
+              ],
+              "responses": {
+                "200": {
+                    "description": "successful operation",
+                    "schema": {
+
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "example":"Success"
+                            },
+                            "data": {
+                                "type": "string",
+                                "example":{
+                                    "enquiry_code": "Zp4YJPBNTX",
+                                    "question": "ABCD  ?",
+                                    "is_read": 0,
+                                    "status": "Not Answered"
+                                }
+                            }
+
+                        }
+                    }
+                },
+
+                "404": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example":"Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "You are not a customer!!, Cannot create the Question."
+                            }
+                        }
+                    }
+                },
+                "422": {
+                    "description": "Validation-Error",
+                    "schema": {
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "example":"Validation-Error"
+                            },
+                            "message": {
+                                "type":"string",
+                                "example":{
+                                  "question": [
+                                      "The question field is required."
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+
+                "401": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example": "Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "Unauthenticated."
+                            }
+                        }
+                    }
+                }
+              }
+          }
+      },
+      "/view-question/{enquiry_code}": {
+          "get": {
+              "tags": [
+                  "View Question"
+              ],
+              "summary": "View Here",
+              "description": "",
+              "operationId": "showALL",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Access token",
+                        "type": "apiKey",
+                        "example": "Bearer 4|55agweK9rvfmJR3j8zzKKxhWvEvlSeGH4bcL0fxV"
+                    },
+                    {
+                        "name": "enquiry_code",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "example" : "dhghddh"
+                    }
+              ],
+              "responses": {
+                "200": {
+                    "description": "successful operation",
+                    "schema": {
+
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "example":"Success"
+                            },
+                            "data": {
+                                "type": "string",
+                                "example":{
+                                    "id": 1,
+                                    "enquiry_code": "Zp4YJPBNTX",
+                                    "question": "ABCD  ?",
+                                    "is_read": 1,
+                                    "status": "In Progress",
+                                    "closed_by": null,
+                                    "closed_at": null,
+                                    "created_by": 2,
+                                    "replies": [],
+                                    "created_user": [
+                                      {
+                                        "id": 2,
+                                        "username": "customer",
+                                        "email": "f.shahina.ca@gmail.com",
+                                        "full_name": "customer 123"
+                                      }
+                                    ],
+                                    "closed_user": []
+                                }
+                            }
+
+                        }
+                    }
+                },
+
+                "404": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example":"Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "No Permission to see!!."
+                            }
+                        }
+                    }
+                },
+
+                "401": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example": "Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "Unauthenticated."
+                            }
+                        }
+                    }
+                }
+              }
+          }
+      },
+      "/close-question/{enquiry_code}": {
+          "post": {
+              "tags": [
+                  "Close Question"
+              ],
+              "summary": "Close Question",
+              "description": "",
+              "operationId": "showALL",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Access token",
+                        "type": "apiKey",
+                        "example": "Bearer 4|55agweK9rvfmJR3j8zzKKxhWvEvlSeGH4bcL0fxV"
+                    },
+                    {
+                        "name": "enquiry_code",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "example" : "dhghddh"
+                    }
+              ],
+              "responses": {
+                "200": {
+                    "description": "successful operation",
+                    "schema": {
+
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "example":"Success"
+                            },
+                            "data": {
+                                "type": "string",
+                                "example":{
+                                    "enquiry_code": "Zp4YJPBNTX",
+                                    "question": "ABCD  ?",
+                                    "is_read": 1,
+                                    "status": "In Progress"
+                                }
+                            }
+
+                        }
+                    }
+                },
+
+                "404": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example":"Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "Not Found."
+                            }
+                        }
+                    }
+                },
+
+                "401": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example": "Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "Unauthenticated."
+                            }
+                        }
+                    }
+                }
+              }
+          }
+      },
+      "/spam-report/{enquiry_code}": {
+          "post": {
+              "tags": [
+                  "SPAM Report"
+              ],
+              "summary": "SPAM Report",
+              "description": "",
+              "operationId": "showALL",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Access token",
+                        "type": "apiKey",
+                        "example": "Bearer 4|55agweK9rvfmJR3j8zzKKxhWvEvlSeGH4bcL0fxV"
+                    },
+                    {
+                        "name": "enquiry_code",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "example" : "dhghddh"
+                    }
+              ],
+              "responses": {
+                "200": {
+                    "description": "successful operation",
+                    "schema": {
+
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "example":"Success"
+                            },
+                            "data": {
+                                "type": "string",
+                                "example":{
+                                    "enquiry_code": "Zp4YJPBNTX",
+                                    "question": "ABCD  ?",
+                                    "is_read": 1,
+                                    "status": "In Progress"
+                                }
+                            }
+
+                        }
+                    }
+                },
+
+                "404": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example":"Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "Not Found."
+                            }
+                        }
+                    }
+                },
+
+                "401": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example": "Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "Unauthenticated."
+                            }
+                        }
+                    }
+                }
+              }
+          }
+      },
+      "/reply/{enquiry_code}": {
+          "post": {
+              "tags": [
+                  "Create Reply"
+              ],
+              "summary": "Create Reply",
+              "description": "",
+              "operationId": "showALL",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Access token",
+                        "type": "apiKey",
+                        "example": "Bearer 4|55agweK9rvfmJR3j8zzKKxhWvEvlSeGH4bcL0fxV"
+                    },
+                    {
+                        "name": "enquiry_code",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "example" : "dhghddh"
+                    },
+                    {
+                        "name": "reply",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string",
+                        "example" : "Abc"
+                    }
+              ],
+              "responses": {
+                "200": {
+                    "description": "successful operation",
+                    "schema": {
+
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "example":"Success"
+                            },
+                            "data": {
+                                "type": "string",
+                                "example":{
+                                    "id": 7,
+                                    "reply": "ABCD",
+                                    "is_read": 0,
+                                    "user_type": "admin"
+
+                                }
+                            }
+
+                        }
+                    }
+                },
+                "422": {
+                    "description": "Validation-Error",
+                    "schema": {
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "example":"Validation-Error"
+                            },
+                            "message": {
+                                "type":"string",
+                                "example":{
+                                  "reply": [
+                                      "The reply field is required."
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+
+                "404": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example":"Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "No Permission to see!!."
+                            }
+                        }
+                    }
+                },
+
+                "401": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example": "Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "Unauthenticated."
+                            }
+                        }
+                    }
+                }
+              }
+          }
+      },
+      "/view-reply/{id}": {
+          "get": {
+              "tags": [
+                  "View Reply"
+              ],
+              "summary": "View Reply",
+              "description": "",
+              "operationId": "showALL",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Access token",
+                        "type": "apiKey",
+                        "example": "Bearer 4|55agweK9rvfmJR3j8zzKKxhWvEvlSeGH4bcL0fxV"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "example" : "dhghddh"
+                    }
+              ],
+              "responses": {
+                "200": {
+                    "description": "successful operation",
+                    "schema": {
+
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "example":"Success"
+                            },
+                            "data": {
+                                "type": "string",
+                                "example":{
+                                    "id": 7,
+                                    "reply": "ABCD",
+                                    "is_read": 0,
+                                    "user_type": "admin",
+                                    "created_by": 1,
+                                    "enquiry_id": 1,
+                                    "enquiry": {
+                                      "id": 1,
+                                      "enquiry_code": "Zp4YJPBNTX",
+                                      "question": "ABCD  ?",
+                                      "is_read": 1,
+                                      "status": "In Progress",
+                                      "closed_at": null
+                                    },
+                                    "created_user": {
+                                      "id": 1,
+                                      "username": "admin",
+                                      "email": "noreplyatshah@gamil.com",
+                                      "user_type": "admin",
+                                      "full_name": "Fathimath Shahina"
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                },
+                "404": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example":"Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "No Permission to see!!."
+                            }
+                        }
+                    }
+                },
+
+                "401": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example": "Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "Unauthenticated."
+                            }
+                        }
+                    }
+                }
+              }
+          }
+      },
+      "/all-replies/{enquiry_code}": {
+          "get": {
+              "tags": [
+                  "All Replies"
+              ],
+              "summary": "All Replies",
+              "description": "",
+              "operationId": "showALL",
+              "consumes": [
+                  "multipart/form-data"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Access token",
+                        "type": "apiKey",
+                        "example": "Bearer 4|55agweK9rvfmJR3j8zzKKxhWvEvlSeGH4bcL0fxV"
+                    },
+                    {
+                        "name": "enquiry_code",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "example" : "dhghddh"
+                    }
+              ],
+              "responses": {
+                "200": {
+                    "description": "successful operation",
+                    "schema": {
+
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "example":"Success"
+                            },
+                            "data": {
+                                "type": "string",
+                                "example":[
+                                    {
+                                      "id": 1,
+                                      "reply": "ABCD",
+                                      "is_read": 0,
+                                      "user_type": "admin",
+                                      "notification_email": 0,
+                                      "enquiry_id": 1,
+                                      "created_by": 1,
+                                      "created_user": {
+                                        "id": 1,
+                                        "username": "admin",
+                                        "email": "noreplyatshah@gamil.com",
+                                        "user_type": "admin",
+                                        "full_name": "Fathimath Shahina"
+                                      }
+                                    }
+                                ]
+                            }
+
+                        }
+                    }
+                },
+                "404": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example":"Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "No Permission to see!!."
+                            }
+                        }
+                    }
+                },
+
+                "401": {
+                    "description": "Error",
+                    "schema": {
+
+                        "properties": {
+
+                            "status": {
+                                "type": "string",
+                                "example": "Error"
+                            },
+                            "message": {
+                                "type": "string",
+                                "example": "Unauthenticated."
+                            }
+                        }
+                    }
+                }
+              }
+          }
+      }
+    }
+
+}
+
