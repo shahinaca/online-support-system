@@ -20,7 +20,7 @@ $ git clone https://github.com/shahinaca/online-support-system.git
 ## Set Environment
 
 ```
-    $ cp .env.example .env
+    copy **.env.example ** to ** .env**
 ```
 
 ## Set the application key
