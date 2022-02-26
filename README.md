@@ -3,6 +3,8 @@
 1. Clone repository
 ```
 $ git clone https://github.com/shahinaca/online-support-system.git
+ 
+ $ cd online-support-system
 ```
 ## Install with Composer
 
