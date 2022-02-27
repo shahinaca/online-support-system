@@ -42,7 +42,7 @@ $ git clone https://github.com/shahinaca/online-support-system.git
     $ php artisan serve
 ````
 ## Run Schedule for Cronjob
- For **Email Notification** and after **24 hours** automatically **status change to Answered** need to keep running the command in another terminal tab.
+ For the **Email Notification** and the after **24 hours** automatically **status change to Answered** , need to keep running the command in another terminal tab.
 ````
     $ php artisan schedule:work
 ````
